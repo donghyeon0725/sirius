@@ -24,8 +24,14 @@ public class Resources {
     private Long orderNum;
 
     @Builder.Default
-    @OneToMany(mappedBy = "resources")
+    @OneToMany(mappedBy = "resources", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ResourcesRole> resourcesRoles = new LinkedHashSet<>();
+
+
+    public void addResourcesRole(ResourcesRole resourcesRole) {
+        this.resourcesRoles.add(resourcesRole);
+        resourcesRole.mappingResources(this);
+    }
 
     public boolean isUrl() {
         return this.resourceType.equals(ResourceType.URL);

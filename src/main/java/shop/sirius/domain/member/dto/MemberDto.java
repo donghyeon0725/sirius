@@ -1,6 +1,7 @@
 package shop.sirius.domain.member.dto;
 
 import lombok.Data;
+import shop.sirius.domain.common.values.Gender;
 
 @Data
 public class MemberDto {
@@ -18,5 +19,5 @@ public class MemberDto {
 
     private Integer dialingCode;
 
-    private String gender;
+    private Gender gender;
 }

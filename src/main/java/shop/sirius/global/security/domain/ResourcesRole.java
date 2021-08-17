@@ -22,4 +22,8 @@ public class ResourcesRole {
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
+    public void mappingResources(Resources resources) {
+        this.resources = resources;
+    }
+
 }

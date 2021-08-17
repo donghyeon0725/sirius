@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RoleHierarchy implements Serializable {
-    @Id
+    @Id @GeneratedValue
     private Long id;
 
     private String child;

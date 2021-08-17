@@ -2,9 +2,9 @@ package shop.sirius.domain.member.domain;
 
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import shop.sirius.domain.common.values.Api;
 import shop.sirius.domain.common.values.ContactNumber;
 import shop.sirius.domain.common.values.Gender;
+import shop.sirius.global.security.jwt.oauth2.provider.AuthProvider;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -35,10 +35,10 @@ public class Member {
     private String lastAccessToken;
 
     @Column(unique = true)
-    private String apiKey;
+    private String authProviderId;
 
     @Enumerated(EnumType.STRING)
-    private Api apiType;
+    private AuthProvider authProvider;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

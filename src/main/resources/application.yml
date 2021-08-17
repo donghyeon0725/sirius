@@ -12,6 +12,20 @@ spring:
   security:
     secretKey: fireWood
 
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 1090310914739-2l11db7p5bjd7n50u87vvsf58d9d0dre.apps.googleusercontent.com
+            clientSecret: B7Zu4_zNwm1OcYyhCpoV0y7Z
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope: email,profile
+          facebook:
+            clientId: 565415171475912
+            clientSecret: 477f2bcf8ee28da78a88f1a4ce824106
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope: email,public_profile
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -21,6 +35,19 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 #        default_batch_fetch_size: 100
 #    open-in-view: false
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000
+  oauth2:
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth2/redirect
+      - myandroidapp://oauth2/redirect
+      - myiosapp://oauth2/redirect
 
 
 api:

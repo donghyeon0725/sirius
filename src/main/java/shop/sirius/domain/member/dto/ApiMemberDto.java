@@ -1,6 +1,7 @@
 package shop.sirius.domain.member.dto;
 
 import lombok.Data;
+import shop.sirius.global.security.jwt.oauth2.provider.AuthProvider;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,7 +13,7 @@ public class ApiMemberDto extends MemberDto {
 
     @NotNull
     @NotEmpty
-    private String apiKey;
+    private String authProviderId;
 
-    private String apiType;
+    private AuthProvider authProvider;
 }
