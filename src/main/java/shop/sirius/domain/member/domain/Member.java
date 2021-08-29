@@ -47,6 +47,10 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MemberRole> memberRoles = new HashSet<>();
 
+    public void changeName(String name) {
+        this.name = name;
+    }
+
     public void addRole(MemberRole role) {
         this.memberRoles.add(role);
         role.mappingMember(this);

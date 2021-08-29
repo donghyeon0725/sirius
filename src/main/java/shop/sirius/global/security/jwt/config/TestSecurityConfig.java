@@ -1,5 +1,6 @@
 package shop.sirius.global.security.jwt.config;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,6 @@ import shop.sirius.global.security.jwt.interceptor.UrlFilterSecurityInterceptor;
 import shop.sirius.global.security.jwt.metadata.UrlFilterInvocationSecurityMetadataSource;
 import shop.sirius.global.security.jwt.repository.HttpCookieOAuth2AuthorizationRequestRepository;
 import shop.sirius.global.security.jwt.service.CustomOAuth2UserService;
-import shop.sirius.global.security.jwt.voters.IpAddressVoter;
 import shop.sirius.global.security.service.RoleHierarchyService;
 import shop.sirius.global.security.service.SecurityResourceService;
 
@@ -41,12 +41,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Profile({"prod"})
+@Profile({"local"})
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-//@PropertySource("classpath:application.yml")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class TestSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.security.secretKey}")
     private String secretKey;
@@ -127,23 +126,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .and()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                .exceptionHandling()
+                .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                 .oauth2Login()
-                    .authorizationEndpoint()
-                    .baseUri("/oauth2/authorize")
-                    .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorize")
+                .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
                 .and()
                 .redirectionEndpoint()
-                    // 이 주소는 사용자가 인증을 마치고, 호출될 끝 점입니다.
-                    // 이 url 에 요청이 올 때에는 인증 정보를 모두 가지고 있다.
-                    // success 핸들러에서 rediection 해버리면 이 끝점은 호출되지 않는 것 같음
-                    .baseUri("/oauth2/callback/*")
+                // 이 주소는 사용자가 인증을 마치고, 호출될 끝 점입니다.
+                // 이 url 에 요청이 올 때에는 인증 정보를 모두 가지고 있다.
+                // success 핸들러에서 rediection 해버리면 이 끝점은 호출되지 않는 것 같음
+                .baseUri("/oauth2/callback/*")
                 .and()
                 .userInfoEndpoint()
-                    // 사용자 정보를 저장하는 용도로 사용
-                    .userService(customOAuth2UserService)
+                // 사용자 정보를 저장하는 용도로 사용
+                .userService(customOAuth2UserService)
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler);
@@ -217,7 +216,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
         List<AccessDecisionVoter<?>> voters = new ArrayList<>();
-        voters.add(new IpAddressVoter(securityResourceService));
         voters.add(roleVoter());
         return voters;
     }

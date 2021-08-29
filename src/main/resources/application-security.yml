@@ -1,14 +1,4 @@
 spring:
-  profiles:
-    active: local
-
-  datasource:
-    url: jdbc:h2:mem:testdb
-    #    url: jdbc:h2:tcp://localhost/~/db;
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
   security:
     secretKey: fireWood
 
@@ -26,15 +16,6 @@ spring:
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope: email,public_profile
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
-#        default_batch_fetch_size: 100
-#    open-in-view: false
 app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
@@ -48,21 +29,4 @@ app:
       - http://localhost:3000/oauth2/redirect
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
-
-
-api:
-  kakao:
-    client_id: bf0e93a698d2bb02bfb634e3f662747c
-    response_type: code
-    kakao_authorize_request_uri: https://kauth.kakao.com/oauth/authorize
-    kakao_login_request_uri: https://kauth.kakao.com/oauth/token
-    kakao_privacy_request_uri: https://kapi.kakao.com/v2/user/me
-    kakao_logout_request_uri: https://kauth.kakao.com/oauth/logout
-    join_request_uri: http://localhost:8080/kakao/join
-    login_request_uri: http://localhost:8080/kakao/login
-    logout_redirect_uri: http://localhost:8080/kakao/login
-
-logging:
-  level:
-    org.hibernate.SQL: debug
 

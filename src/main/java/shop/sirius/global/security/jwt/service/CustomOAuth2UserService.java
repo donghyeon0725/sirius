@@ -49,17 +49,23 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Optional<Member> userOptional = memberService.findMemberByEmail(oAuth2UserInfo.getEmail());
         Member member;
         if(userOptional.isPresent()) {
-            member = userOptional.get();
+            member = updateMember(userOptional.get(), oAuth2UserInfo);
             if(!member.getAuthProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
                         member.getAuthProvider() + " account. Please use your " + member.getAuthProvider() +
                         " account to login.");
             }
+
         } else {
             member = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
 
         return UserPrincipal.create(member);
+    }
+
+    private Member updateMember(Member member, OAuth2UserInfo oAuth2UserInfo) {
+        member.changeName(oAuth2UserInfo.getName());
+        return member;
     }
 
     private Member registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {

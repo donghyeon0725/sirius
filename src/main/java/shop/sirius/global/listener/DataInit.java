@@ -16,7 +16,7 @@ import shop.sirius.global.security.jwt.metadata.UrlFilterInvocationSecurityMetad
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
-@Profile("local")
+@Profile({"local", "test", "prod"})
 @Component
 @RequiredArgsConstructor
 public class DataInit implements ApplicationRunner {
@@ -70,13 +70,10 @@ public class DataInit implements ApplicationRunner {
             entityManager.persist(admin_roleHierarchy);
             entityManager.persist(user_roleHierarchy);
 
+            // /** 경로 자원에 대한 권한
             Resources resources = Resources.builder().resourceName("/**").resourceType(ResourceType.URL).orderNum(99999L).build();
             resources.addResourcesRole(ResourcesRole.builder().role(role_admin).build());
-//            Resources resources2 = Resources.builder().resourceName("/testtest").resourceType(ResourceType.URL).orderNum(1L).build();
-//            resources2.addResourcesRole(ResourcesRole.builder().role(role_user).build());
-
             entityManager.persist(resources);
-//            entityManager.persist(resources2);
         }
     }
 }
